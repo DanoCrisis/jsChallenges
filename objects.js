@@ -84,11 +84,16 @@
 
 // ----------------------------- Activity 5 -------------------------------
 
-const coffeeShop = {
+tableOrder = ["Flat White", "Cheeseburger", "Fries", "Latte", "Slice of Cake"]  // Waiter takes an order from a table
+foodOrder = []      // empty food order array waiting to be filled
+drinksOrder = []    // empty drinks order array waiting to be filled
+
+
+const coffeeShop = {                 // Coffee shop object with 2 objects and 2 methods in it
     drinksWithPrices : {
         "Soft Drink" : 1,
         "Tea" : 1.5,
-        "Flat White" : 2,
+        "Flat White" : 2,               // an object with the keys as drinks and the values as prices
         "Latte" : 2,
         "Mocha" : 2.5,
         "Cappuccino" : 3
@@ -96,18 +101,64 @@ const coffeeShop = {
     foodWithPrices : {
         "Slice of Cake" : 3,
         "Fries" : 3,
-        "Cheese Salad" : 4,
+        "Cheese Salad" : 4,            // an object with the keys as food items and the values as prices
         "Jacket Potato" : 5,
         "Club Sandwich" : 5,
         "Cheeseburger" : 6
     },
-    drinksOrdered(drinks) {
-        return `You have ordered the ${drinks} and this costs £${this.drinksWithPrices[drinks]} `
+    drinksOrdered(drinks) {           // Method for showing the drinks order and totaling up the cost of the drinks
+        drinkTotal = 0
+        console.log()
+        for (x=0; x < drinks.length; x++){
+            drinkTotal += this.drinksWithPrices[drinks[x]]       // adds up each value for price of drink and saves it in the variable drinkTotal
+            console.log(`You have ordered the ${drinks[x]} at £${this.drinksWithPrices[drinks[x]]}`)  // prints out each drink you have ordered along with the price to the console
+        }
+        console.log()
+        console.log(`The total amount for the drinks order is £${drinkTotal}`)  // prints out the variable drinkTtotal to the console
+        console.log()
     },
     foodOrdered(food) {
-        return `You have ordered the ${food} and this costs £${this.foodWithPrices[food]} `
+        foodTotal = 0
+        console.log()
+        for (x=0; x < food.length; x++){
+            foodTotal += this.foodWithPrices[food[x]]
+            console.log(`You have ordered the ${food[x]} at £${this.foodWithPrices[food[x]]}`)
+            // return `You have ordered the ${food[x]} at £${this.foodWithPrices[food[x]]}`
+        }
+        console.log()
+        console.log(`The total amount for the food order is £${foodTotal}`)
+        // return `The total amount for the food order is £${foodTotal}`
+        console.log()
     },
+    finalBill(drinkTotal, foodTotal) {
+        return `The total amount for your food and drinks today will be £${drinkTotal + foodTotal}`
+    }
 }
 
-console.log(coffeeShop.drinksOrdered("Tea"))
-console.log(coffeeShop.foodOrdered("Fries"))
+
+for (x=0; x < tableOrder.length; x++){      // Checks if item in the table order is in the drinks menu, if it is it adds it to the drinks order
+    if (tableOrder[x] in coffeeShop.drinksWithPrices){
+        drinksOrder.push(tableOrder[x])
+    }
+}
+
+for (x=0; x < tableOrder.length; x++){      // Checks if item in the table order is in the food menu, if it is it adds it to the food order
+    if (tableOrder[x] in coffeeShop.foodWithPrices){
+        foodOrder.push(tableOrder[x])
+    }
+}
+
+// console.log(drinksOrder)
+coffeeShop.drinksOrdered(drinksOrder)
+
+// console.log(foodOrder)
+coffeeShop.foodOrdered(foodOrder)
+// console.log(coffeeShop.foodOrdered(foodOrder))
+
+console.log(coffeeShop.finalBill(drinkTotal, foodTotal))
+
+
+
+
+
+
