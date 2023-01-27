@@ -84,12 +84,13 @@
 
 // ----------------------------- Activity 5 -------------------------------
 
-tableOrder = ["Flat White", "Cheeseburger", "Fries", "Latte", "Slice of Cake"]  // Waiter takes an order from a table
+tableOrder = ["Flat White", "Cheeseburger", "Fries", "Latte", "Slice of Cake", "Gazpacho Soup"]  // Waiter takes an order from a table
 foodOrder = []      // empty food order array waiting to be filled
 drinksOrder = []    // empty drinks order array waiting to be filled
+confusedOrder = []   // empty unmatched array waiting to be filled
 
 
-const coffeeShop = {                 // Coffee shop object with 2 objects and 2 methods in it
+const coffeeShop = {                 // Coffee shop object with 2 objects and 3 methods in it
     drinksWithPrices : {
         "Soft Drink" : 1,
         "Tea" : 1.5,
@@ -130,21 +131,28 @@ const coffeeShop = {                 // Coffee shop object with 2 objects and 2 
         // return `The total amount for the food order is £${foodTotal}`
         console.log()
     },
-    finalBill(drinkTotal, foodTotal) {
+    cannotOrder(noOrder) {
+        console.log()
+        for (x=0; x < noOrder.length; x++){
+            console.log(`You have ordered the ${noOrder[x]}, but I am afraid that is not on the menu, can I get you something else? `)
+        }
+        console.log()
+    },
+    finalBill(drinkTotal, foodTotal) {         // adds the drinks and food totals together and returns a string to show this
         return `The total amount for your food and drinks today will be £${drinkTotal + foodTotal}`
     }
 }
 
 
-for (x=0; x < tableOrder.length; x++){      // Checks if item in the table order is in the drinks menu, if it is it adds it to the drinks order
+for (x=0; x < tableOrder.length; x++){      // Checks if item in the table order is in the drinks / food menu
     if (tableOrder[x] in coffeeShop.drinksWithPrices){
         drinksOrder.push(tableOrder[x])
     }
-}
-
-for (x=0; x < tableOrder.length; x++){      // Checks if item in the table order is in the food menu, if it is it adds it to the food order
-    if (tableOrder[x] in coffeeShop.foodWithPrices){
+    else if (tableOrder[x] in coffeeShop.foodWithPrices){
         foodOrder.push(tableOrder[x])
+    }                                           // if it is it adds it to the correct order, if not it adds it to the confusedOrder
+    else {
+        confusedOrder.push(tableOrder[x])
     }
 }
 
@@ -154,6 +162,8 @@ coffeeShop.drinksOrdered(drinksOrder)
 // console.log(foodOrder)
 coffeeShop.foodOrdered(foodOrder)
 // console.log(coffeeShop.foodOrdered(foodOrder))
+
+coffeeShop.cannotOrder(confusedOrder)
 
 console.log(coffeeShop.finalBill(drinkTotal, foodTotal))
 
